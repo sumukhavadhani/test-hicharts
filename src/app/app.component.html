@@ -3,5 +3,7 @@
     Welcome to {{title}}!!
   </h1>
 </div>
-<chart [options]="options"></chart>
+<div *ngFor="let option of options">
+  <chart [options]="option"></chart>
+</div>
 

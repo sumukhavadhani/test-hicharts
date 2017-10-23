@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Ng2Highcharts, Ng2Highmaps, Ng2Highstocks} from 'ng2-highcharts';
 
 
@@ -7,21 +7,27 @@ import {Ng2Highcharts, Ng2Highmaps, Ng2Highstocks} from 'ng2-highcharts';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'High Charts Example';
+export class AppComponent implements OnInit {	
+	title = 'High Charts Example';
 	chart: any;
-  constructor() {
-		// this.options = {
-		// 	title : { text : 'simple chart' },
-		// 	series: [{
-		// 			data: [29.9, 71.5, 106.4, 129.2],
-		// 	}]
-		// };
-		this.options = {
+	options: any[];
+
+  constructor() {}
+	
+	ngOnInit(): void {
+		this.options = [];
+		this.options.push(this.getSolidGaugeOptions('Speed Dial', 'Speed', [60], 'kmph', 0, 100));
+		this.options.push(this.getSolidGaugeOptions('Fuel Gauge', 'Fuel', [50], 'Litre', 0, 50));
+		this.options.push(this.getSolidGaugeOptions('RPM Gauge', 'RPM', [3500], 'RPM', 0, 10000));
+	}
+
+
+	private getSolidGaugeOptions(title, seriesName, seriesValues, tooltipText, min, max): any {
+		var options = {
 			chart: {
 				type: 'solidgauge'
 			},    
-			title: {text: 'Solid Gauge'},
+			title: {text: title},
 			pane: {
 				center: ['50%', '85%'],
 				size: '140%',
@@ -51,13 +57,13 @@ export class AppComponent {
 				tickAmount: 2,
 				title: {
 						y: -70,
-						text: 'Speed'
+						text: seriesName
 				},
 				labels: {
 						y: 16
 				},
-				min: 0,
-				max: 100
+				min: min,
+				max: max
 			},
 			plotOptions: {
 				solidgauge: {
@@ -74,18 +80,18 @@ export class AppComponent {
 			},
 
 			series: [{
-				name: 'Speed',
-				data: [80],
+				name: seriesName,
+				data: seriesValues,
 				dataLabels: {
 					format: '<div style="text-align:center"><span style="font-size:25px;color: black' +
 										'">{y}</span><br/>' +
-									'<span style="font-size:12px;color:silver">km/h</span></div>'
+									'<span style="font-size:12px;color:silver">' + tooltipText + '</span></div>'
 				},
 				tooltip: {
-						valueSuffix: ' km/h'
+						valueSuffix: ' ' + tooltipText
 				}
 			}]
 		};
+		return options;
 	}
-	options: any;
 }

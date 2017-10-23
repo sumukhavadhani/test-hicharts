@@ -13,10 +13,12 @@ export function highchartsFactory() {
   const hc = require('highcharts');
   const dd = require('highcharts/modules/exporting');
   const sg = require('highcharts/modules/solid-gauge');
+  const hm  = require('highcharts/modules/heatmap');
   const hcm = require('highcharts/highcharts-more');  
   dd(hc);
   hcm(hc);
-  sg(hc);
+  sg(hc);  
+  hm(hc);
   return hc;
 }
 
