@@ -3,7 +3,12 @@
     Welcome to {{title}}!!
   </h1>
 </div>
-<div *ngFor="let option of options">
-  <chart [options]="option"></chart>
-</div>
 
+<div class="stack">
+  <div class="row">
+    <div class="col" *ngFor="let so of superOptions">
+      <p>"{{so.name}}"</p>
+      <chart [options]="so.options"></chart>
+    </div>
+  </div>
+</div>
